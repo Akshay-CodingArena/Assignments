@@ -1,14 +1,17 @@
 const changeImage = (newIndex) => {
   const dots = Array.from(document.querySelectorAll(".dots-container .dot"));
+  const cImages = Array.from(document.querySelectorAll("#current-image"));
   dots.forEach((dot, index) => {
     if (index == newIndex) {
+      cImages[index].classList.remove("d-none");
       dot.classList.add("active");
     } else {
+      cImages[index].classList.add("d-none");
       dot.classList.remove("active");
     }
   });
-  const image = document.querySelector("#current-image");
-  image.src = this.images[newIndex];
+  // const image = document.querySelector("#current-image");
+  // image.src = this.images[newIndex];
 };
 
 const preloadImages = (images) => {
@@ -54,15 +57,20 @@ const addDots = function () {
     .insertBefore(dotsContainer, document.querySelector("#current-image"));
 };
 
-const renderCarousel = (url) => {
+const renderCarousel = (urls) => {
   const container = document.createElement("div");
   const imageContainer = document.querySelector("#container  .image-container");
   const buttons = document.querySelector("#container #buttons");
-  const image = document.createElement("img");
-  image.id = "current-image";
-  image.src = url;
   container.id = "carousel";
-  container.appendChild(image);
+  urls.forEach((url, index) => {
+    const image = document.createElement("img");
+    image.id = "current-image";
+    if (index != this.current) {
+      image.classList.add("d-none");
+    }
+    image.src = url;
+    container.appendChild(image);
+  });
   container.classList.add("carousel-image");
   imageContainer.appendChild(container);
   container.appendChild(buttons);
@@ -101,7 +109,7 @@ const init = async function () {
   this.images = await fetchImages();
   this.length = this.images.length;
   this.current = 0;
-  renderCarousel(this.images[this.current]);
+  renderCarousel(this.images);
   const prevButton = document.querySelector("#prev");
   const nextButton = document.querySelector("#next");
   addDots.call(this);
