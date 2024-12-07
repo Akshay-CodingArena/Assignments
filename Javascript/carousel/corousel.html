@@ -1,12 +1,24 @@
 <html>
     <head>
         <link rel="stylesheet" href="css/styles.css">
-        <script src="script.js"></script>
+        <script src="script.js" type="module"></script>
     </head>
     <body>
         <header>
             <h1 style="text-align:center">Carousel Vanila</h1>
         </header>
+        <section id="data-filter">
+        <div>
+            <input placeholder="Title" id="search" aria-label="search" type="text" />    
+            <button id="searchFilter">Filter</button>
+            <button id="sortResult">Sort</button>
+        </div>
+        <div>
+           <div id="pagination-container">
+           </div>
+        </div>
+    </section>
+        <section>
         <div id="container">
             <!-- <img src="images/1.png" alt="Bike Image"/>
             <img src="images/2.png" alt="Bike Image"/>
@@ -21,6 +33,7 @@
                 <span id="next">Next</span>
             <div>
         </div>
+        </section>
 
     </body>
 </html>
