@@ -1,23 +1,24 @@
 import { imageData } from "./imageData.js";
-import { filteredDataBySearch } from "./filter.js"
-import { filteredDataByPage} from "./filter.js"
+import { filteredDataBySearch } from "./filter.js";
+import { filteredDataByPage } from "./filter.js";
 
-var OFFSET = 10
-var allImagesData=[]
-var imagesData=[]
-var current = 0
-var tLength = 0
-var length = 0
-var filtering=false
-var currentPage = 1
+// use let and const
 
-const searchInput = document.getElementById("search")
-const searchInputFilter = document.getElementById("searchFilter")
+const OFFSET = 10;
+let allImagesData = [];
+let imagesData = [];
+let current = 0;
+let tLength = 0;
+let length = 0;
+let currentPage = 1;
+
+const searchInput = document.getElementById("search");
+const searchInputFilter = document.getElementById("searchFilter");
 const prevButton = document.querySelector("#prev");
 const nextButton = document.querySelector("#next");
 const container = document.querySelector("#container");
-const paginationContainer = document.getElementById("pagination-container")
-const sortButton = document.getElementById("sortResult")
+const paginationContainer = document.getElementById("pagination-container");
+const sortButton = document.getElementById("sortResult");
 
 const changeImage = (newIndex) => {
   const dots = Array.from(document.querySelectorAll(".dots-container .dot"));
@@ -31,15 +32,6 @@ const changeImage = (newIndex) => {
       dot.classList.remove("active");
     }
   });
-  // const image = document.querySelector("#current-image");
-  // image.src = imagesData[newIndex];
-};
-
-const preloadImages = (images) => {
-  images.forEach((url) => {
-    const img = new Image();
-    img.src = url;
-  });
 };
 
 const appendImages = function (images) {
@@ -49,12 +41,14 @@ const appendImages = function (images) {
   //   imageContainer.id = ""
   // let image = document.createElement("img");
   images.forEach(function (data, index) {
+    // const
     let image = document.createElement("img");
     image.src = data.image;
-    image.title = data.name
-    image.addEventListener("click", ()=>{
-      console.log("clicked", index)
-      changeImage( index)});
+    image.title = data.name;
+    image.addEventListener("click", () => {
+      console.log("clicked", index);
+      changeImage(index);
+    });
     imageContainer.appendChild(image);
   });
   container.insertBefore(
@@ -130,87 +124,87 @@ const moveToNextImage = function (currIndex, images, totalImages) {
   changeImage.call(this, this.current);
 };
 
-const showPage = (page)=>{
+const showPage = (page) => {
   const buttons = document.querySelector("#container #buttons");
-  container.appendChild(buttons)
-  document.getElementsByClassName("image-container")[0]?.remove()
-  currentPage = page-1;
-  current = 0
- // showPages(tLength)
-  tLength = imagesData.length
+  container.appendChild(buttons);
+  document.getElementsByClassName("image-container")[0]?.remove();
+  currentPage = page - 1;
+  current = 0;
+  // showPages(tLength)
+  tLength = imagesData.length;
 
-  let currentImagesData = [...imagesData].slice((currentPage*OFFSET),Math.min(tLength,(currentPage*OFFSET)+OFFSET))
- // console.log("Data",page, currentImagesData, imagesData, currentPage*OFFSET,Math.min(tLength,(currentPage*OFFSET)+OFFSET))
+  let currentImagesData = [...imagesData].slice(
+    currentPage * OFFSET,
+    Math.min(tLength, currentPage * OFFSET + OFFSET)
+  );
+  // console.log("Data",page, currentImagesData, imagesData, currentPage*OFFSET,Math.min(tLength,(currentPage*OFFSET)+OFFSET))
   length = currentImagesData.length;
   appendImages(currentImagesData);
   renderCarousel(currentImagesData);
   addDots(currentImagesData);
-}
+};
 
-const showPages = (total)=>{
-  let count = Math.floor(total/OFFSET)
-  console.log("Both are",total, length)
-  const arr = Array.from(paginationContainer.childNodes)
-  arr.forEach((page)=>page.remove())
+const showPages = (total) => {
+  let count = Math.floor(total / OFFSET);
+  console.log("Both are", total, length);
+  const arr = Array.from(paginationContainer.childNodes);
+  arr.forEach((page) => page.remove());
 
-  for(let i=0;i<count;i++){
-    let page = document.createElement("button")
-    page.textContent = i+1
+  for (let i = 0; i < count; i++) {
+    let page = document.createElement("button");
+    page.textContent = i + 1;
 
-    page.addEventListener("click",(()=>{
-      paginationContainer.childNodes[currentPage].classList.remove("active")
-      currentPage=i
-      paginationContainer.childNodes[currentPage].classList.add("active")
-      showPage(i+1)
-    }))
-    
-    paginationContainer.appendChild(page)
+    page.addEventListener("click", () => {
+      paginationContainer.childNodes[currentPage].classList.remove("active");
+      currentPage = i;
+      paginationContainer.childNodes[currentPage].classList.add("active");
+      showPage(i + 1);
+    });
+
+    paginationContainer.appendChild(page);
   }
-}
-
+};
 
 const init = async function () {
   allImagesData = await imageData();
-  length = allImagesData.length
-  imagesData=[...allImagesData]
-  showPages(length)
-  showPage(1)
+  length = allImagesData.length;
+  imagesData = [...allImagesData];
+  showPages(length);
+  showPage(1);
 
-
-  searchInputFilter.addEventListener("click",(e)=>{
+  searchInputFilter.addEventListener("click", (e) => {
     // imageNodes.forEach((node)=>{if(node.tagName=="IMG"){node.remove()}})
-    const search = searchInput.value
-    if(!search){
-      searchInputFilter.classList.remove("active")
-    }else{
-      searchInputFilter.classList.add("active")
+    const search = searchInput.value;
+    if (!search) {
+      searchInputFilter.classList.remove("active");
+    } else {
+      searchInputFilter.classList.add("active");
     }
-      
-      const filteredData = filteredDataBySearch(allImagesData, search)
-      imagesData = filteredData
-      length = filteredData.length;
-      current = 0;
-      currentPage = 0
-      showPages(length)
-      showPage(1)
-      // appendImages(filteredData);
-      // renderCarousel(filteredData);
-  })
 
-  sortButton.addEventListener("click",()=>{
-    if(sortButton.innerText == "ASC"){
-      sortButton.innerText = "DESC"
-      imagesData.sort((a,b)=>a.name > b.name?-1:1)
-    }else{
-      sortButton.innerText = "ASC"
-      imagesData.sort((a,b)=>a.name > b.name?1:-1)
+    const filteredData = filteredDataBySearch(allImagesData, search);
+    imagesData = filteredData;
+    length = filteredData.length;
+    current = 0;
+    currentPage = 0;
+    showPages(length);
+    showPage(1);
+    // appendImages(filteredData);
+    // renderCarousel(filteredData);
+  });
+
+  sortButton.addEventListener("click", () => {
+    if (sortButton.innerText == "ASC") {
+      sortButton.innerText = "DESC";
+      imagesData.sort((a, b) => (a.name > b.name ? -1 : 1));
+    } else {
+      sortButton.innerText = "ASC";
+      imagesData.sort((a, b) => (a.name > b.name ? 1 : -1));
     }
-   // showPages(length)
-    showPage(1)
-  })
+    // showPages(length)
+    showPage(1);
+  });
   prevButton.addEventListener("click", moveToPreviousImage);
   nextButton.addEventListener("click", moveToNextImage);
 };
 
 document.addEventListener("DOMContentLoaded", () => init());
-
