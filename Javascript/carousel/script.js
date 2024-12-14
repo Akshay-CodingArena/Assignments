@@ -35,7 +35,6 @@ const changeImage = (newIndex) => {
 };
 
 const appendImages = function (images) {
-  console.log("Append images", images);
   const imageContainer = document.createElement("div");
   imageContainer.classList.add("image-container");
   //   imageContainer.id = ""
@@ -93,22 +92,6 @@ const renderCarousel = (urls) => {
   container.classList.add("carousel-image");
   imageContainer.appendChild(container);
   container.appendChild(buttons);
-};
-
-const fetchImages = async () => {
-  const url = "https://picsum.photos/500/300";
-  const res = await Promise.all([
-    fetch(url),
-    fetch(url),
-    fetch(url),
-    fetch(url),
-    fetch(url),
-    fetch(url),
-  ]);
-  const images = res.map((image) => image.url);
-  appendImages(images);
-  //preloadImages(images);
-  return images;
 };
 
 const moveToPreviousImage = function (currIndex, images, totalImages) {
@@ -207,4 +190,4 @@ const init = async function () {
   nextButton.addEventListener("click", moveToNextImage);
 };
 
-document.addEventListener("DOMContentLoaded", () => init());
+document.addEventListener("DOMContentLoaded", init);
