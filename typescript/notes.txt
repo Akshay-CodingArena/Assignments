@@ -1,0 +1,174 @@
+dispatch, next, action
+
+type User = {
+  name:string
+  role:1|2,
+}
+
+// type User = {      Type with same name not allowed
+//   class:"10"
+// }
+
+let a:User= {
+  name:"Suresh",
+  role:1
+}
+
+
+interface Banks {
+  bankName:"HDFC" | "IDFC",
+}
+
+interface Banks {           // Banks will have bankName and bankBalance
+  bankBalance:number
+}
+
+interface Cards extends Banks{
+  type:"Credit"| "Debit",
+  check(checkme:string):string
+}
+
+let userCard:Cards = {
+  bankBalance:2000,
+  bankName:"HDFC",
+  type:"Credit",
+  check:(name:"Star")=>name
+}
+console.log(userCard.check)
+
+
+const enum Roles{
+  Admin="Shame",
+  User=1,
+  Manager
+}
+
+dsad
+sad
+sad
+sad
+sad
+sad
+
+
+
+console.log(Roles.Admin, Roles.Manager)
+
+class Users {
+  email:string
+  name:string
+  marks:number = 10
+  readonly school:string = "KMS"
+  city:string="Delhi"
+  constructor(name:string, email:string){
+    this.email=email
+    this.name=name
+  }
+
+  get AppleEmail(){
+    return `Apple ${this.email}`
+  }
+
+  set Marks(marks:number){
+    if(marks<10){
+      throw new Error("Marks should is more than 10")
+    }
+    this.marks = marks
+  }
+}
+
+let Lakhan = new Users("Lakhan", "Lakkhi@gmail.com")
+
+//Object cannot be made from Abstract classes
+abstract class Camera {
+  shots:number = 30
+
+  constructor(cameraMode:string, filter:string){
+
+  }
+
+  abstract click():void
+
+  getShots():number{
+    return this.shots
+  }
+}
+
+class Instagram extends Camera {
+  constructor(reel:string, cameraMode:string, filter:string){
+    super(cameraMode, filter)
+  }
+  click(){
+    console.log("Picture Clicked", this.getShots())
+  }
+}
+
+function GenericTest<Type>(val:Type):void{
+
+}
+
+const Test=function <T>(val:T[]):T {
+    return val[1]
+}
+
+// Generic Arrow Function need <Type,>
+const Test2 = <T,>(val: T[]): T => {
+    return val[1];
+};
+
+// Generic class
+type Course = {
+  name:string,
+  amount:number
+}
+class Sellable<Type>{
+  public cart:Type[]=[]
+  addToCart(product:Type):void{
+    this.cart.push(product)
+  }
+}
+
+// new Testing<string>()
+
+
+type FISH = {
+  isSwim:()=>void   
+}
+
+type BIRD = {
+  isFly:()=>void
+}
+
+type HUMAN = {
+  isMove:()=>void
+}
+
+function isFish (pet:FISH | BIRD | HUMAN):pet is FISH{
+  return (pet as FISH).isSwim !==undefined
+}
+
+function isBird (pet:FISH | BIRD | HUMAN):pet is BIRD{
+  return (pet as BIRD).isFly !==undefined
+}
+
+function animal(pet:FISH | BIRD | HUMAN){
+    if("isSwim" in pet){
+      pet.isSwim()
+    }else if(isBird(pet)){
+      pet.isFly()
+    }else{
+      pet.isMove()
+    }
+}
+
+let Shark = {
+  isFly:()=>{
+    console.log("Yes I can fly")
+  },
+  isSwim:()=>{
+    console.log("I can Swim too")
+  }
+}
+
+console.log("testing casting", (Shark as FISH), isBird(Shark).isFly)
+animal(Shark)

@@ -1,9 +1,4 @@
-const filteredDataByPage = ()=>{
-
-}
-
 const filteredDataBySearch = (arr, search)=>{
-    console.log("Array is", arr, search)
     const result =  arr.filter((image)=>{
         if(image.name.toLowerCase().indexOf(search.toLowerCase()) > -1){
             return true
@@ -12,8 +7,7 @@ const filteredDataBySearch = (arr, search)=>{
             return false
         }
     })
-    console.log("res",result)
     return result
 }
 
-export {filteredDataByPage, filteredDataBySearch}
+export {filteredDataBySearch}

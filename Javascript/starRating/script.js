@@ -13,10 +13,11 @@ const trackFunction = (e)=>{
     if(e.clientX > left+half){
         trackElement.classList.remove("half")
         trackElement.classList.add("active")
-        haveHalf=true
+        haveHalf = false
     }else{
         trackElement.classList.remove("active")
         trackElement.classList.add("half")
+        haveHalf=true
     }
 }
 

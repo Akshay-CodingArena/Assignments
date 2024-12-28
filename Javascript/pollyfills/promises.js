@@ -82,6 +82,10 @@ Promise.myAllSettled = function (promises) {
         .catch((err) => {
           result.push({ status: "rejected", value: res });
           count++;
+        }).finally(()=>{
+          if(count == length){
+            resolve(result)
+          }
         });
     });
   });

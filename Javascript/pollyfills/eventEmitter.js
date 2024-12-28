@@ -6,6 +6,12 @@ class EventEmitter {
   }
 
   on(event, listener) {
+    if(typeof listener != "function"){
+      throw(new Error("Listener should be the callback function"))
+    }
+    if(typeof event != "string" && event){
+      throw(new Error("Event should be a string"))
+    }
     if (!Object.hasOwn(this.events, event)) {
       this.events[event] = [];
     }

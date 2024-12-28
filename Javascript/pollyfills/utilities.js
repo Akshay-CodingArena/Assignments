@@ -1,6 +1,6 @@
 const debounce = (callBack, waitTime)=>{
     let id
-    return (params)=>{
+    return (...params)=>{
         clearTimeout(id)
         id = setTimeout(()=>callBack(params), waitTime)
     }
@@ -8,7 +8,7 @@ const debounce = (callBack, waitTime)=>{
 
 const throttle = (callBack, waitTime)=>{
     let id
-    return (params)=>{
+    return (...params)=>{
         clearInterval(id)
         id = setInterval(()=>callBack(params), waitTime)
     }
