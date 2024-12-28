@@ -1,0 +1,49 @@
+.App {
+    font-family: sans-serif;
+    text-align: center;
+  }
+  
+  table {
+    width: 100%;
+  }
+  
+  th {
+    background-color: grey;
+  }
+  
+  td,
+  th {
+    border: 1px solid black;
+    padding: 10px;
+  }
+  
+  .colored-row td {
+    background-color: red;
+  }
+  
+  .container {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .controls {
+    padding: 0px 10px;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .page {
+    margin: 0px 2px;
+    cursor: pointer;
+    padding: 5px;
+    background-color: grey;
+  }
+  
+  .page:nth-child(n) {
+    border-right: 1px solid white;
+  }
+  .page:nth-last-child(1) {
+    border: 0px;
+  }
+  
